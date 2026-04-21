@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const NGROK_URL = 'https://52bf-222-110-133-193.ngrok-free.app';
+const NGROK_URL = 'https://434d-222-110-133-193.ngrok-free.app';  // 여기 수정!
 
 export const client = axios.create({
   baseURL: `${NGROK_URL}/api`,
