@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "my-care-app",
+    "slug": "my-care-app",
+    "version": "1.0.0",
+    "scheme": "my-care-app",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "plugins": [
+      "expo-router",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
