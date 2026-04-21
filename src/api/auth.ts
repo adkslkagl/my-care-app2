@@ -2,7 +2,7 @@ import { client } from './client';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 
-const NGROK_URL = 'https://52bf-222-110-133-193.ngrok-free.app';
+const NGROK_URL = 'https://434d-222-110-133-193.ngrok-free.app';
 
 export const authApi = {
   login: (data: { email: string; password: string }) =>
