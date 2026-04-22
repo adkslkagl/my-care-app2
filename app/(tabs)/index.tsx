@@ -1,11 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { useAuthStore } from '@/src/store/useAuthStore';
+import { authApi } from '@/src/api/auth';
 import { useRouter } from 'expo-router';
 
 export default function Home() {
   const { user, setLogout } = useAuthStore();
   const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await authApi.logout();
+    } catch {
+      // 이미 만료된 토큰이어도 로컬 상태는 초기화
+    } finally {
+      await setLogout();
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -30,7 +41,7 @@ export default function Home() {
       </TouchableOpacity>
 
       <View style={{ marginTop: 20 }}>
-        <Button title="로그아웃" onPress={() => setLogout()} color="#ff4444" />
+        <Button title="로그아웃" onPress={handleLogout} color="#ff4444" />
       </View>
     </View>
   );

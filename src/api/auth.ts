@@ -1,8 +1,6 @@
-import { client } from './client';
+import { client, API_URL } from './client';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-
-const NGROK_URL = 'https://434d-222-110-133-193.ngrok-free.app';
 
 export const authApi = {
   login: (data: { email: string; password: string }) =>
@@ -24,10 +22,10 @@ export const authApi = {
     client.post('/auth/resend-verification'),
 
   loginWithGoogle: async () => {
-    const redirectUrl = 'exp://192.168.0.65:8081/--/oauth/callback';
+    const redirectUrl = Linking.createURL('/oauth/callback');
 
     const result = await WebBrowser.openAuthSessionAsync(
-      `${NGROK_URL}/api/auth/oauth/google`,
+      `${API_URL}/api/auth/oauth/google?redirect_uri=${encodeURIComponent(redirectUrl)}`,
       redirectUrl
     );
     console.log('result:', JSON.stringify(result));
