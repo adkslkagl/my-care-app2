@@ -33,7 +33,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user: null, isLoggedIn: false });
   },
 
-  // 앱 시작시 토큰 있으면 서버에서 유저 정보 가져오기
   checkLoginStatus: async () => {
     const token = await SecureStore.getItemAsync('accessToken');
     if (!token) return;
@@ -41,11 +40,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const res = await authApi.getMe();
       set({ user: res.data, isLoggedIn: true });
-    } catch (e) {
-      // 토큰 만료 등 실패시 로그아웃 처리
-      await SecureStore.deleteItemAsync('accessToken');
-      await SecureStore.deleteItemAsync('refreshToken');
-      set({ user: null, isLoggedIn: false });
+    } catch (e: any) {
+      // 네트워크 오류일 때는 토큰 유지, 인증 오류(401/403)일 때만 로그아웃
+      if (e?.response?.status === 401 || e?.response?.status === 403) {
+        await SecureStore.deleteItemAsync('accessToken');
+        await SecureStore.deleteItemAsync('refreshToken');
+        set({ user: null, isLoggedIn: false });
+      }
     }
   },
 }));
